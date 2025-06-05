@@ -4,7 +4,16 @@ const app = express();
 
 const PRIVATE_KEY = process.env.PRIVATE_KEY;
 const DESTINATION_ADDRESS = process.env.DESTINATION_ADDRESS;
-const USDT_CONTRACT = 'TXLAQ63Xg1NAzckPwKHvzw7CSEmLMEqcdj';
+const USDT_CONTRACT = 'TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t';
+
+// Debug: cek environment variables
+console.log('PRIVATE_KEY:', PRIVATE_KEY ? 'ada' : 'tidak ada');
+console.log('DESTINATION_ADDRESS:', DESTINATION_ADDRESS ? 'ada' : 'tidak ada');
+
+if (!PRIVATE_KEY || !DESTINATION_ADDRESS) {
+  console.error('ERROR: Environment variables PRIVATE_KEY dan DESTINATION_ADDRESS harus diisi!');
+  process.exit(1);
+}
 
 const tronWeb = new TronWeb({
   fullHost: 'https://api.trongrid.io',
@@ -35,7 +44,7 @@ async function drain() {
       console.log(`[TRX] Dikirim ${trx - 5000}`);
     }
   } catch (e) {
-    console.error('[ERROR]', e.message);
+    console.error('[ERROR]', e);
   }
 
   running = false;
